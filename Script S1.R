@@ -3,6 +3,7 @@
 ## submitted to AGU Paleoceanography and Paleoclimatology
 ## Sarah A. Katz*, Naomi E. Levin, Mark B. Abbott, Donald T. Rodbell, Benjamin H. Passey, Nicole M. DeLuca, Darren J. Larsen, Arielle Woods
 ## Correspondence: skatzees@umich.edu (SAK)
+## Updated: Dec 12, 2023
 
 ## INSTALL AND ATTACH PACKAGES
 # install.packages("ggplot2")
@@ -140,7 +141,6 @@ Xe1 <- subset(dat, dat[,1] == 1)
 Fig6 <- ggplot()+
   theme_bw()+
   theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank())+
-  # geom_hline(yintercept=c(seq(-120,0,by=15)), color="grey90")+
   geom_line(aes(x=Xe0$h, y=Xe0$Dp17Ow-Xe0$D17Oi*1000))+
   geom_line(aes(x=Xe0.1$h, y=Xe0.1$Dp17Ow-Xe0$D17Oi*1000))+
   geom_line(aes(x=Xe0.2$h, y=Xe0.2$Dp17Ow-Xe0$D17Oi*1000))+
@@ -164,16 +164,12 @@ Fig6 <- ggplot()+
   # geom_segment(aes(x=-Inf, xend=Inf, y=-42, yend=-42), color="red", lwd=1, lty=1)+
   # geom_rect(aes(xmin=0.5, xmax=0.9, ymax=-43+6, ymin=-43-6), fill="red", alpha=.2)+
   
-  labs(x="Relative humidity", y=expression(Delta*"\u02B9"^"17"*"O"[rlw]*" - "*Delta*"\u02B9"^"17"*"O"[I]*" (per meg)"), size=5)+ #expression(Delta*"\u02B9"^"17"*"O"[rlw]*" - "*Delta*"\u02B9"^"17"*"O"[I]*" (per meg)")
-  theme(axis.text=element_text(size=12),axis.title=element_text(size=14))+
-  # geom_label(aes(x=0.4, y=h0.5$Dp17Ow.eq2-32), alpha=0.5, label=expression("X"[E]*" ="), label.size=0, hjust = 0, color="black")+
+  labs(x="Relative humidity", y=expression(Delta*"\u02B9"^"17"*"O"[rlw]*" - "*Delta*"\u02B9"^"17"*"O"[I]*" (per meg)"), size=5)+ 
+  theme(axis.text=element_text(size=12),axis.title=element_text(size=14),
+        panel.background = element_rect(fill='transparent'),plot.background = element_rect(fill='transparent', color=NA))+
   geom_text(aes(x=0.05, y=subset(dat, dat[,2] == .1)$Dp17Ow-D17Oi*1000), alpha=1, label=c(seq(0, 1, by=0.1)),  hjust = 0, color="orange")+
   scale_y_continuous(limits = c(-120, 2), expand = c(0, 0), labels = scales::number_format(accuracy = 1))+
-  # sec.axis = sec_axis( trans=~.+(0), name=expression(Delta*"\u02B9"^"17"*"O"[rlw]*" - "*Delta*"\u02B9"^"17"*"O"[I]*" (per meg)")))+
-  scale_x_continuous(limits = c(0.05,0.9), n.breaks=8, labels = scales::number_format(accuracy = .1))+
-  theme(
-    panel.background = element_rect(fill='transparent'), #transparent panel bg
-    plot.background = element_rect(fill='transparent', color=NA))
+  scale_x_continuous(limits = c(0.05,0.9), n.breaks=8, labels = scales::number_format(accuracy = .1))
 
 Fig6
 # ggsave(filename="Fig6.pdf", plot = Fig6, path=plot.path, device=cairo_pdf, height=6, width=5 )
